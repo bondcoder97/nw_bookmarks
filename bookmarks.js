@@ -36,6 +36,17 @@ class Bookmarks{
     }
 
 
+    async add(url){
+        try{
+            if(!url) throw new Error("Wrong params!");
+            if(await this.is_exist(url)) throw new Error("Bookmark with such URL already exists!");
+            await fs.appendFile(this.bookmark_filepath, `${url}\n`);
+        }
+        catch(err){
+          console.log(err);
+        }
+    }
+
 
     to_text(bookmarks_list){
         let result = "";
