@@ -47,6 +47,20 @@ class Bookmarks{
         }
     }
 
+    async remove(url){
+        try{
+            if(!url) throw new Error("Wrong params!");
+            const bookmarks = await this.get_bookmarks();
+            const remove_index = bookmarks.findIndex((bookmark)=> bookmark === url);
+            if(remove_index === -1) throw new Error("Such bookmark does not exist!");
+            bookmarks.splice(remove_index, 1);
+            fs.writeFile(this.bookmark_filepath, this.to_text(bookmarks));
+        }
+        catch(err){
+          console.log(err);
+        }
+    }
+
 
     to_text(bookmarks_list){
         let result = "";
